@@ -33,10 +33,17 @@ def parse_definitions(section, numbered=False):
 
 
 def parse_section(section):
+    def parse(name):
+        secs = section.get_sections(matches=name)
+        if secs:
+            return parse_definitions(secs[0])
+        else:
+            return []
+
+    synonyms = parse('Synonyms')
+    antonyms = parse('Antonyms')
+    related_terms = parse('Related terms')
     definitions = parse_definitions(section, numbered=True)
-    synonyms = list(map(parse_definitions, section.get_sections(matches='Synonyms')))
-    antonyms = list(map(parse_definitions, section.get_sections(matches='Antonyms')))
-    related_terms = list(map(parse_definitions, section.get_sections(matches='Related terms')))
     return definitions, synonyms, antonyms, related_terms
 
 
@@ -56,10 +63,19 @@ def main():
             wikicode = mwparserfromhell.parse(elem.text)
             entries = []
             for section in wikicode.get_sections(matches='^German$'):
-                entries.extend(parse_sections('adjective', section.get_sections(matches='Adjective')))
-                entries.extend(parse_sections('verb', section.get_sections(matches='Verb')))
-                entries.extend(parse_sections('adverb', section.get_sections(matches='Adverb')))
-                entries.extend(parse_sections('noun', section.get_sections(matches='Noun')))
+                entries.extend(
+                    parse_sections(
+                        'adjective', section.get_sections(
+                            matches='Adjective')))
+                entries.extend(
+                    parse_sections(
+                        'verb', section.get_sections(matches='Verb')))
+                entries.extend(
+                    parse_sections(
+                        'adverb', section.get_sections(matches='Adverb')))
+                entries.extend(
+                    parse_sections(
+                        'noun', section.get_sections(matches='Noun')))
             if entries:
                 obj = title, entries
                 print(json.dumps(obj))
