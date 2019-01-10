@@ -1,0 +1,31 @@
+td {
+    border: 1px black solid;
+}
+
+.gender-m {
+    color: blue;
+}
+
+.gender-f {
+    color: red;
+}
+
+.gender-n {
+    color: green;
+}
+
+.gender-p {
+    color: deeppink;
+}
+
+a {
+    color: inherit;
+}
+
+td {
+    font-size: 20px;
+}
+
+.word {
+    font-size: 36px;
+}

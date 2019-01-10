@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Frequency List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/words.css') }}">
+</head>
+<body>
+<div id="highlighter-package-specifier" data-pkg="de-dictcc"></div>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Word</th>
+        <th>Definition</th>
+        <th>Synonyms</th>
+        <th>Antonyms</th>
+        <th>Related words</th>
+    </tr>
+    </thead>
+    {% for word in words %}
+    <tr>
+        <td>
+            {{loop.index}}
+        </td>
+        <td class="word">
+            {{word.word}}
+        </td>
+        <td>
+            <ol>
+                {% if word.definitions|length == 1 %}
+                    {{word.definitions[0]}}
+                {% else %}
+                    {% for definition in word.definitions %}
+                    <li>{{definition}}</li>
+                    {% endfor %}
+                {% endif %}
+            </ol>
+        </td>
+        <td>
+            <ul>
+                {% for word in word.synonyms %}
+                <li>{{word}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {% for word in word.antonyms %}
+                <li>{{word}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {% for word in word.related_words %}
+                <li>{{word}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
