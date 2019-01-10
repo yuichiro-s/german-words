@@ -63,7 +63,7 @@ def main():
             if entries:
                 obj = title, entries
                 print(json.dumps(obj))
-            sys.stdout.flush()
+        elem.clear()
 
 
 if __name__ == '__main__':
